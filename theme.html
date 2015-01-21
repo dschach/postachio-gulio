@@ -142,7 +142,18 @@
                 <h2><a href="{{ post.permalink }}">{{ post.title }}</a></h2>
               </div>
               <div class="post-body" data-type-cleanup="true">
-                {{ post.content }}
+                {% if post.photos or post.content|striptags|wordcount > 0 %}
+                  {% for photo in post.photos %}
+                  {% if photo and loop.index == 1 %}
+                  <div class="image">
+                    <a href="{{ post.permalink }}">
+                      <img src="{{ photo.square }}" alt="Featured Photo" />
+                    </a>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                  {% endif %}
+                {{ post.content|striptags }}
               </div>
               <div class="post-info">
                 <div class="info-left">
